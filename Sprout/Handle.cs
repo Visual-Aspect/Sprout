@@ -6,135 +6,114 @@ using System.Text.Json.Serialization;
 
 namespace Sprout;
 
-public class Variable {
-    public string Name { get; set; }
-    public dynamic Value { get; set; }
-
-    public Variable(string name, dynamic value) {
-        Name = name;
-        Value = value;
-    }
-
-    public override string ToString() {
-        return Name + ": " + Value;
-    }
-}
-
 public class SPObject {
-    public List<Variable> Variables { get; set; }
-
-    public SPObject(List<Variable> variables) {
-        Variables = variables;
-    }
-
-    public SPObject() {
-        Variables = new List<Variable>();
-    }
-
-    public dynamic? GetVariable(string name) {
-        foreach (Variable variable in Variables) {
-            if (variable.Name == name) return variable.Value;
+    public Dictionary<string, dynamic?> Variables = new Dictionary<string, dynamic?>();
+    
+    public dynamic? this[string key] {
+        get {
+            if (Variables.ContainsKey(key)) return Variables[key];
+            else return null;
+        } set {
+            Variables[key] = value;
         }
-
-        return null;
-    }
-
-    public void SetVariable(string name, dynamic value) {
-        foreach (Variable variable in Variables) {
-            if (variable.Name == name) {
-                variable.Value = value;
-                return;
-            }
-        }
-
-        Variables.Add(new Variable(name, value));
-    }
-
-    public void RemoveVariable(string name) {
-        foreach (Variable variable in Variables) {
-            if (variable.Name == name) {
-                Variables.Remove(variable);
-                return;
-            }
-        }
-    }
-
-    public void ClearVariables() {
-        Variables.Clear();
     }
 
     public override string ToString() {
+        return ToString(0);
+    }
+
+    public string ToString(int indent) {
+        string indentString = new string(' ', indent * 4);
         string output = "{\n";
 
-        foreach (Variable variable in Variables) {
-            output += "    " + variable.Name + ": " + variable.Value + "\n";
+        foreach (KeyValuePair<string, dynamic?> variable in Variables) {
+            string key = variable.Key;
+            dynamic? value = variable.Value;
+
+            if (value is SPObject) {
+                output += $"{indentString}    {key} = {((SPObject)value).ToString(indent + 1)};\n";
+            } else if (value is SPArray) {
+                output += $"{indentString}    {key} = {((SPArray)value).ToString(indent + 1)};\n";
+            } else {
+                output += $"{indentString}    {key} = {value};\n";
+            }
         }
 
-        output += "}";
+        output += $"{indentString}}}";
 
         return output;
     }
 }
 
 public class SPArray {
-    public List<dynamic> Values { get; set; }
+    public Dictionary<int, dynamic?> Variables = new Dictionary<int, dynamic?>();
 
-    public SPArray(List<dynamic> values) {
-        Values = values;
+    public dynamic? this[int key] {
+        get {
+            if (Variables.ContainsKey(key)) return Variables[key];
+            else return null;
+        } set {
+            Variables[key] = value;
+        }
     }
 
-    public void Add(dynamic value) {
-        Values.Add(value);
+    public override string ToString() {
+        return ToString(0);
     }
 
-    public void Remove(dynamic value) {
-        Values.Remove(value);
-    }
+    public string ToString(int indent) {
+        string indentString = new string(' ', indent * 4);
+        string output = "[\n";
 
-    public void Clear() {
-        Values.Clear();
+        foreach (KeyValuePair<int, dynamic?> variable in Variables) {
+            int key = variable.Key;
+            dynamic? value = variable.Value;
+
+            if (value is SPObject) {
+                output += $"{indentString}    {((SPObject)value).ToString(indent + 1)},\n";
+            } else if (value is SPArray) {
+                output += $"{indentString}    {((SPArray)value).ToString(indent + 1)},\n";
+            } else {
+                output += $"{indentString}    {value},\n";
+            }
+        }
+
+        output += $"{indentString}]";
+
+        return output;
     }
 }
 
 public static class SP {
-    public static dynamic? FileHandle(string path) {
-        if (!File.Exists(path)) return null;
+    public static dynamic FileHandle(string path) {
+        if (!File.Exists(path)) throw new FileNotFoundException($"File {path} does not exist");
 
         string data = File.ReadAllText(path);
-
         dynamic? output = Parse(data);
 
-        if (output is SPObject spObject) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            
-            foreach (Variable variable in spObject.Variables) {
-                dictionary.Add(variable.Name, variable.Value);
-            }
-
-            return dictionary;
-        } else if (output is SPArray) {
-            Dictionary<int, object> dictionary = new Dictionary<int, object>();
-
-            for (int i = 0; i < output.Values.Count; i++) {
-                dictionary.Add(i, output.Values[i]);
-            }
-
-            return dictionary;
-        }
-
-        return null;
+        return output;
     }
 
-    public static dynamic? Parse(string data) {
+    public static dynamic Parse(string data) {
         data = data.Trim();
 
-        if (data.StartsWith("{") && data.EndsWith("}")) {
+        if (data.StartsWith("{") && data.EndsWith("}"))
             return ParseObject(data.Substring(1, data.Length - 2));
-        } else if (data.StartsWith("[") && data.EndsWith("]")) {
-            return ParseArray(data.Substring(1, data.Length - 2));
-        }
         
-        return null;
+        if (data.StartsWith("[") && data.EndsWith("]"))
+            return ParseArray(data.Substring(1, data.Length - 2));
+        
+        return new SPObject();
+    }
+
+    public static dynamic ParseValue(string value) {
+        if (double.TryParse(value, out double doubleValue)) return doubleValue;
+        if (bool.TryParse(value, out bool boolValue)) return boolValue;
+        if (value.StartsWith("\"") && value.EndsWith("\"")) return value.Substring(1, value.Length - 2);
+        if (value.StartsWith("{") && value.EndsWith("}")) return ParseObject(value.Substring(1, value.Length - 2));
+        if (value.StartsWith("[") && value.EndsWith("]")) return ParseArray(value.Substring(1, value.Length - 2));
+        
+        return value;
     }
 
     public static SPObject ParseObject(string data) {
@@ -152,31 +131,23 @@ public static class SP {
             string key = keyValueMatch.Groups["key"].Value.Trim();
             string value = keyValueMatch.Groups["value"].Value.Trim();
 
-            void currentTo(dynamic value) {
-               variables.SetVariable(key, value);
-               //Console.WriteLine("Setting " + key + " to " + value + " (" + value.GetType() + ")");
-            }
-
-            if (double.TryParse(value, out double doubleValue)) {
-                currentTo(doubleValue);
-            } else if (bool.TryParse(value, out bool boolValue)) {
-                currentTo(boolValue);
-            } else if (value.StartsWith("\"") && value.EndsWith("\"")) {
-                currentTo(value.Substring(1, value.Length - 2));
-            } else if (value.StartsWith("{") && value.EndsWith("}")) {
-                currentTo(ParseObject(value.Substring(1, value.Length - 2)) ?? new SPObject(new List<Variable>()));
-            } else if (value.StartsWith("[") && value.EndsWith("]")) {
-                currentTo(ParseArray(value.Substring(1, value.Length - 2)) ?? new SPArray(new List<dynamic>()));
-            } else {
-                currentTo(value);
-            }
+            variables[key] = ParseValue(value);
         }
 
         return variables;
     }
 
-    public static dynamic? ParseArray(string data) {
-        return null;
+    public static SPArray ParseArray(string data) {
+        data = data.Trim();
+
+        string[] tokens = SplitString(data, ',');
+        SPArray variables = new SPArray();
+        
+        for (int i = 0; i < tokens.Length; i++) {
+            variables[i] = ParseValue(tokens[i].Trim());
+        }
+
+        return variables;
     }
 
     private static readonly string arrayPlaceholder = "(SP_ARRAY[{0}])";
