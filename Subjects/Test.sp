@@ -2,9 +2,12 @@
     number = 123;
     string = "hello";
     array = [
-        1,
-        2,
-        3
+        null,
+        {
+            123 = 456;
+            abc = "def"
+        },
+        1
     ];
     object = {
         test = "12345";

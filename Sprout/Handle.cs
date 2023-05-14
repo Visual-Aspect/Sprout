@@ -7,9 +7,9 @@ using System.Text.Json.Serialization;
 namespace Sprout;
 
 public class SPObject {
-    public Dictionary<string, dynamic?> Variables = new Dictionary<string, dynamic?>();
+    public Dictionary<string, dynamic> Variables = new Dictionary<string, dynamic>();
     
-    public dynamic? this[string key] {
+    public dynamic this[string key] {
         get {
             if (Variables.ContainsKey(key)) return Variables[key];
             else return null;
@@ -26,9 +26,9 @@ public class SPObject {
         string indentString = new string(' ', indent * 4);
         string output = "{\n";
 
-        foreach (KeyValuePair<string, dynamic?> variable in Variables) {
+        foreach (KeyValuePair<string, dynamic> variable in Variables) {
             string key = variable.Key;
-            dynamic? value = variable.Value;
+            dynamic value = variable.Value;
 
             if (value is SPObject) {
                 output += $"{indentString}    {key} = {((SPObject)value).ToString(indent + 1)};\n";
@@ -46,9 +46,9 @@ public class SPObject {
 }
 
 public class SPArray {
-    public Dictionary<int, dynamic?> Variables = new Dictionary<int, dynamic?>();
+    public Dictionary<int, dynamic> Variables = new Dictionary<int, dynamic>();
 
-    public dynamic? this[int key] {
+    public dynamic this[int key] {
         get {
             if (Variables.ContainsKey(key)) return Variables[key];
             else return null;
@@ -65,9 +65,9 @@ public class SPArray {
         string indentString = new string(' ', indent * 4);
         string output = "[\n";
 
-        foreach (KeyValuePair<int, dynamic?> variable in Variables) {
+        foreach (KeyValuePair<int, dynamic> variable in Variables) {
             int key = variable.Key;
-            dynamic? value = variable.Value;
+            dynamic value = variable.Value;
 
             if (value is SPObject) {
                 output += $"{indentString}    {((SPObject)value).ToString(indent + 1)},\n";
@@ -89,7 +89,7 @@ public static class SP {
         if (!File.Exists(path)) throw new FileNotFoundException($"File {path} does not exist");
 
         string data = File.ReadAllText(path);
-        dynamic? output = Parse(data);
+        dynamic output = Parse(data);
 
         return output;
     }
@@ -112,6 +112,7 @@ public static class SP {
         if (value.StartsWith("\"") && value.EndsWith("\"")) return value.Substring(1, value.Length - 2);
         if (value.StartsWith("{") && value.EndsWith("}")) return ParseObject(value.Substring(1, value.Length - 2));
         if (value.StartsWith("[") && value.EndsWith("]")) return ParseArray(value.Substring(1, value.Length - 2));
+        if (value == "null") return null;
         
         return value;
     }
