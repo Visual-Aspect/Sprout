@@ -20,14 +20,8 @@ public static partial class SP {
         foreach (KeyValuePair<int, dynamic> variable in spArray.Variables) {
             int key = variable.Key;
             dynamic value = variable.Value;
-
-            if (value is SPObject obj) {
-                output += $"{indentString}{tab}{ObjectToString(obj, incrementIndent, tabSize)},{lastChar}";
-            } else if (value is SPArray arr) {
-                output += $"{indentString}{tab}{ArrayToString(arr, incrementIndent, tabSize)},{lastChar}";
-            } else {
-                output += $"{indentString}{tab}{value ?? "null"},{lastChar}";
-            }
+            bool isLastElement = key == spArray.Variables.Count - 1;
+            output += $"{indentString}{tab}{SerializeToWritable(value, incrementIndent, tabSize)}{(isLastElement ? "" : ",")}{lastChar}";
         }
 
         output += $"{indentString}]";
@@ -48,18 +42,20 @@ public static partial class SP {
         foreach (KeyValuePair<string, dynamic> variable in spObject.Variables) {
             string key = variable.Key;
             dynamic value = variable.Value;
-
-            if (value is SPObject obj) {
-                output += $"{indentString}{tab}{key} = {ObjectToString(obj, incrementIndent, tabSize)};{lastChar}";
-            } else if (value is SPArray arr) {
-                output += $"{indentString}{tab}{key} = {ArrayToString(arr, incrementIndent, tabSize)};{lastChar}";
-            } else {
-                output += $"{indentString}{tab}{key} = {value ?? "null"};{lastChar}";
-            }
+            output += $"{indentString}{tab}{key} = {SerializeToWritable(value, incrementIndent, tabSize)};{lastChar}";
         }
 
         output += $"{indentString}}}";
 
         return output;
+    }
+
+    public static string SerializeToWritable(dynamic value, int indent = -1, int tabSize = 4) {
+        if (value is SPObject obj) return ObjectToString(obj, indent, tabSize);
+        if (value is SPArray arr) return ArrayToString(arr, indent, tabSize);
+        if (value is null) return "null";
+        if (value is string str) return $"\"{str}\"";
+        
+        return value.ToString();
     }
 }
