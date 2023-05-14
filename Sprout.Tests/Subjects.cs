@@ -7,9 +7,9 @@ public class Subjects {
     public void TestObject() {
         SPObject testObject = SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
         
-        Assert.Equal(testObject["array"]?[0], null);
-        Assert.Equal(testObject["array"]?[1]["123"], 456);
-        Assert.Equal(testObject["array"]?[2] + 1, 2);
+        Assert.Equal(testObject["array"][0], null);
+        Assert.Equal(testObject["array"][1]["123"], 456);
+        Assert.Equal(testObject["array"][2] + 1, 2);
     }
 
     [Fact]
