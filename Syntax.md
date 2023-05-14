@@ -9,7 +9,7 @@ string = "example";
 int = 1;
 double = 1.0;
 bool = true;
-array = [ 1, 2, 3 ];
+array = [ 1; 2; 3 ];
 object = {
     ... = ...;
 }
@@ -52,7 +52,7 @@ string = "example";
 int = 1;
 double = 1.0;
 bool = true;
-array = [ 1, 2, 3 ];
+array = [ 1; 2; 3 ];
 object = {
     ... = ...;
 }

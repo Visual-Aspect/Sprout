@@ -1,0 +1,12 @@
+/Users/nebuladev/Documents/sprout/Sprout/bin/Debug/net7.0/Sprout.deps.json
+/Users/nebuladev/Documents/sprout/Sprout/bin/Debug/net7.0/Sprout.dll
+/Users/nebuladev/Documents/sprout/Sprout/bin/Debug/net7.0/Sprout.pdb
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.csproj.AssemblyReference.cache
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.AssemblyInfoInputs.cache
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.AssemblyInfo.cs
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.csproj.CoreCompileInputs.cache
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.dll
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/refint/Sprout.dll
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/Sprout.pdb
+/Users/nebuladev/Documents/sprout/Sprout/obj/Debug/net7.0/ref/Sprout.dll
