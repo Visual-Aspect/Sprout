@@ -24,23 +24,35 @@ public class Subjects {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
 
+        List<int> testList = new List<int>();
+        Stopwatch currentStopwatch = new Stopwatch();
+
         for (int i = 0; i < 1000; i++) {
+            currentStopwatch.Restart();
             SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
+            currentStopwatch.Stop();
+            testList.Add((int)currentStopwatch.ElapsedMilliseconds);
         }
 
         stopwatch.Stop();
         Console.WriteLine("File reading: " + stopwatch.ElapsedMilliseconds);
+        Console.WriteLine("Average: " + testList.Average());
 
         string fileData = File.ReadAllText("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
 
         stopwatch.Restart();
+        testList.Clear();
 
         for (int i = 0; i < 1000; i++) {
+            currentStopwatch.Restart();
             SP.Parse(fileData);
+            currentStopwatch.Stop();
+            testList.Add((int)currentStopwatch.ElapsedMilliseconds);
         }
 
         stopwatch.Stop();
         Console.WriteLine("Parsing: " + stopwatch.ElapsedMilliseconds);
+        Console.WriteLine("Average: " + testList.Average());
     }
 
     [Fact]
