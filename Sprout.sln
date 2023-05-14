@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprout", "Sprout\Sprout.csproj", "{AD11C6EE-CF19-44D0-8ABB-09F104F4B826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprout.Tests", "Sprout.Tests\Sprout.Tests.csproj", "{06F12FF3-2D68-476D-AD20-A083E26D602F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD11C6EE-CF19-44D0-8ABB-09F104F4B826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD11C6EE-CF19-44D0-8ABB-09F104F4B826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD11C6EE-CF19-44D0-8ABB-09F104F4B826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD11C6EE-CF19-44D0-8ABB-09F104F4B826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06F12FF3-2D68-476D-AD20-A083E26D602F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F12FF3-2D68-476D-AD20-A083E26D602F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F12FF3-2D68-476D-AD20-A083E26D602F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F12FF3-2D68-476D-AD20-A083E26D602F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
