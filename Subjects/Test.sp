@@ -14,5 +14,6 @@
         innerObject = {
             abcdeg = "test"
         }
-    }
+    };
+    nullValue = null
 }

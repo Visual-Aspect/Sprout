@@ -18,29 +18,6 @@ public class SPArray {
         }
     }
 
-    public override string ToString() {
-        return ToString(0);
-    }
-
-    public string ToString(int indent) {
-        string indentString = new string(' ', indent * 4);
-        string output = "[\n";
-
-        foreach (KeyValuePair<int, dynamic> variable in Variables) {
-            int key = variable.Key;
-            dynamic value = variable.Value;
-
-            if (value is SPObject) {
-                output += $"{indentString}    {((SPObject)value).ToString(indent + 1)},\n";
-            } else if (value is SPArray) {
-                output += $"{indentString}    {((SPArray)value).ToString(indent + 1)},\n";
-            } else {
-                output += $"{indentString}    {value},\n";
-            }
-        }
-
-        output += $"{indentString}]";
-
-        return output;
-    }
+    public override string ToString() => SP.ArrayToString(this);
+    public string ToString(int indent, int tabSize) => SP.ArrayToString(this, indent, tabSize);
 }

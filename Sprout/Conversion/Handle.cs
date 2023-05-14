@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Sprout;
 
-public static class SP {
+public static partial class SP {
     public static dynamic FileHandle(string path) {
         if (!File.Exists(path)) throw new FileNotFoundException($"File {path} does not exist");
 

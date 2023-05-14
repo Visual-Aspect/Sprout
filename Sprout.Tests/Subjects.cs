@@ -42,4 +42,18 @@ public class Subjects {
         stopwatch.Stop();
         Console.WriteLine("Parsing: " + stopwatch.ElapsedMilliseconds);
     }
+
+    [Fact]
+    public void Serialize() {
+        SPObject testObject = SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
+        
+        string serialized = SP.ObjectToString(testObject);
+        Console.WriteLine(serialized);
+
+        serialized = SP.ObjectToString(testObject, 0);
+        Console.WriteLine(serialized);
+
+        serialized = SP.ObjectToString(testObject, 0, 1);
+        Console.WriteLine(serialized);
+    }
 }
