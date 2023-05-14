@@ -49,11 +49,5 @@ public class Subjects {
         
         string serialized = SP.ObjectToString(testObject);
         Console.WriteLine(serialized);
-
-        serialized = SP.ObjectToString(testObject, 0);
-        Console.WriteLine(serialized);
-
-        serialized = SP.ObjectToString(testObject, 0, 1);
-        Console.WriteLine(serialized);
     }
 }
