@@ -7,7 +7,7 @@ To use Sprout, create a new .SP file (Short for .sprout; you can use either) and
 
 Here is an example of a Sprout file:
 
-```json
+```js
 {
     {
         myString = "abcd";
@@ -39,7 +39,7 @@ In Sprout, there are two main types of data: Objects and Arrays.
 
 Objects are declared with curly brackets `{}`, and contain keys with a value.
 
-```json
+```js
 {
     key = value;
 }
@@ -47,7 +47,7 @@ Objects are declared with curly brackets `{}`, and contain keys with a value.
 
 A key can be a string or an integer, and a value can be a string, integer, double, boolean, array, null, or object.
 
-```json
+```js
 {
     string = "example";
     int = 1;
@@ -67,7 +67,7 @@ Keys are seperated from values with an equals sign `=`, and each definition is s
 
 Arrays are declared with square brackets `[]`, and contain values.
 
-```json
+```js
 [
     value
 ]
@@ -75,7 +75,7 @@ Arrays are declared with square brackets `[]`, and contain values.
 
 Arrays consist of the same value rules:
 
-```json
+```js
 [
     "example",
     1,
