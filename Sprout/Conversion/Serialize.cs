@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sprout;
+namespace SproutNS;
 
-public static partial class SP {
+public static partial class Sprout {
     public static string ArrayToString(SPArray spArray, int indent = -1, int tabSize = 4) {
         string indentString = "";
         if (indent > 0) indentString = new string(' ', indent * tabSize);

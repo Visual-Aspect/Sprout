@@ -1,11 +1,11 @@
 using System.Diagnostics;
 
-namespace Sprout.Tests;
+namespace SproutNS.Tests;
 
 public class Subjects {
     [Fact]
     public void TestObject() {
-        SPObject testObject = SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
+        SPObject testObject = Sprout.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
         
         Assert.Equal(testObject["array"][0], null);
         Assert.Equal(testObject["array"][1]["123"], 456);
@@ -14,7 +14,7 @@ public class Subjects {
 
     [Fact]
     public void TestArray() {
-        SPArray testArray = SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Array.sp");
+        SPArray testArray = Sprout.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Array.sp");
 
         for (int i = 1; i <= testArray.Variables.Count(); i++) Assert.Equal(testArray[i - 1], i);
     }
@@ -29,7 +29,7 @@ public class Subjects {
 
         for (int i = 0; i < 1000; i++) {
             currentStopwatch.Restart();
-            SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
+            Sprout.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
             currentStopwatch.Stop();
             testList.Add((int)currentStopwatch.ElapsedMilliseconds);
         }
@@ -45,7 +45,7 @@ public class Subjects {
 
         for (int i = 0; i < 1000; i++) {
             currentStopwatch.Restart();
-            SP.Parse(fileData);
+            Sprout.Parse(fileData);
             currentStopwatch.Stop();
             testList.Add((int)currentStopwatch.ElapsedMilliseconds);
         }
@@ -57,9 +57,9 @@ public class Subjects {
 
     [Fact]
     public void Serialize() {
-        SPObject testObject = SP.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
+        SPObject testObject = Sprout.FileHandle("/Users/nebuladev/Documents/sprout/Subjects/Test.sp");
         
-        string serialized = SP.ObjectToString(testObject);
+        string serialized = Sprout.ObjectToString(testObject);
         Console.WriteLine(serialized);
     }
 }

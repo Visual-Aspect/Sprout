@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sprout;
+namespace SproutNS;
 
 public class SPArray {
     public Dictionary<int, dynamic> Variables = new Dictionary<int, dynamic>();
@@ -18,6 +18,6 @@ public class SPArray {
         }
     }
 
-    public override string ToString() => SP.ArrayToString(this);
-    public string ToString(int indent, int tabSize) => SP.ArrayToString(this, indent, tabSize);
+    public override string ToString() => Sprout.ArrayToString(this);
+    public string ToString(int indent, int tabSize) => Sprout.ArrayToString(this, indent, tabSize);
 }

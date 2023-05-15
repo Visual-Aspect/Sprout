@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Sprout.Tests;
+namespace SproutNS.Tests;
 
 public class Building {
     [Fact]

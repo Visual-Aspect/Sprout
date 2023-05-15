@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sprout;
+namespace SproutNS;
 
 public class SPObject {
     public Dictionary<string, dynamic> Variables = new Dictionary<string, dynamic>();
@@ -18,6 +18,6 @@ public class SPObject {
         }
     }
 
-    public override string ToString() => SP.ObjectToString(this);
-    public string ToString(int indent, int tabSize) => SP.ObjectToString(this, indent, tabSize);
+    public override string ToString() => Sprout.ObjectToString(this);
+    public string ToString(int indent, int tabSize) => Sprout.ObjectToString(this, indent, tabSize);
 }
